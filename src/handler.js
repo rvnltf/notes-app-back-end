@@ -6,10 +6,11 @@ const addNoteHandler = (request, h) => {
 
     const id = nanoid(5);
     const createdAt = new Date().toISOString();
-    const updateAt = createdAt;
+    console.log(createdAt);
+    const updatedAt = createdAt;
 
     const newNote = {
-        title, tags, body, id, createdAt, updateAt
+        title, tags, body, id, createdAt, updatedAt
     };
 
     notes.push(newNote);
@@ -36,4 +37,11 @@ const addNoteHandler = (request, h) => {
     return response;
 }
 
-module.exports = {addNoteHandler};
+const getAllNotesHandler = (request, h) => ({
+    status: 'success',
+    data: {
+        notes
+    }
+})
+
+module.exports = {addNoteHandler, getAllNotesHandler};
