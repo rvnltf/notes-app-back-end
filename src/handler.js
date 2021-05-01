@@ -6,7 +6,6 @@ const addNoteHandler = (request, h) => {
 
     const id = nanoid(5);
     const createdAt = new Date().toISOString();
-    console.log(createdAt);
     const updatedAt = createdAt;
 
     const newNote = {
@@ -35,13 +34,35 @@ const addNoteHandler = (request, h) => {
     });
     response.code(500);
     return response;
-}
+};
 
 const getAllNotesHandler = (request, h) => ({
     status: 'success',
     data: {
         notes
     }
-})
+});
 
-module.exports = {addNoteHandler, getAllNotesHandler};
+const getNoteByIdHandler = (request, h) => {
+    const {id} = request.params;
+
+    const note = notes.filter(n=>n.id===id)[0];
+
+    if(note !== undefined){
+        return {
+            status: 'success',
+            data: {
+                note
+            }
+        }
+    }
+
+    const response = h.response({
+        status: 'fail',
+        message: 'Catatan tidak ditemukan'
+    });
+    response.code(404);
+    return response;
+}
+
+module.exports = {addNoteHandler, getAllNotesHandler, getNoteByIdHandler};
